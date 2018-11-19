@@ -1,0 +1,36 @@
+#!/bin/bash/Python
+from sklearn.neural_network import MLPClassifier
+import pandas as pd
+from sklearn import tree
+from sklearn.metrics import mean_squared_error
+import numpy as np 
+import sys
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
+import graphviz 
+from sklearn import preprocessing
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import learning_curve
+## Globals
+df = 0
+X = 0
+y = 0
+def loadDataI():
+    global df,X,y
+    df = pd.read_csv('../datasets/network-intrusions/pcap-corrected.csv',header=None)
+    le = preprocessing.LabelEncoder()
+    cols_to_drop = [1,2,3]
+    for x in cols_to_drop:
+        le.fit(df.iloc[:,x])
+        df.iloc[:,x] = le.transform(df.iloc[:,x])
+    ## FEATURES AND LABEL SELECTION
+    X = df.iloc[:,0:39].values
+    y = df.iloc[:,42].values
+def loadDataII():
+    global df,X,y
+    df = pd.read_csv('../datasets/expression/data.csv')
+    df_label = pd.read_csv('../datasets/expression/labels.csv')
+    X = df.iloc[:,1:len(df.columns)-1].values
+    y = df_label.iloc[:,1].values
